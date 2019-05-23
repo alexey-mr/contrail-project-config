@@ -38,7 +38,7 @@
       - playbooks/base/post-logs.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: Juniper/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
     timeout: 28800
     nodeset:
       nodes:
@@ -59,7 +59,7 @@
       - playbooks/base/post-logs.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: Juniper/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
     timeout: 28800
     secrets:
       - site_logs
@@ -73,7 +73,7 @@
     pre-run: playbooks/contrail/src-pre.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: Juniper/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
 
 - job:
     name: contrail-vnc-base
@@ -305,7 +305,7 @@
     post-run: playbooks/contrail-base2/post.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: Juniper/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
     timeout: 28800
 
 - job:
@@ -324,7 +324,7 @@
       This job is posting infra-doc html.
     parent: build-infra-doc
     required-projects:
-      - Juniper/contrail-zuul-jobs
+      - alexey-mr/contrail-zuul-jobs
       - Juniper/contrail-infra-doc
     post-run: playbooks/publish-infra-doc/post.yaml
     nodeset: builder-centos-7
@@ -337,7 +337,7 @@
     description: |
       Publish build rpms to Nexus repository.
     required-projects:
-      - Juniper/contrail-zuul-jobs
+      - alexey-mr/contrail-zuul-jobs
     post-run: playbooks/publish-third-party-packages/post.yaml
     nodeset: builder-centos-7
     secrets:

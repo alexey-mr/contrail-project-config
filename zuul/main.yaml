@@ -5,7 +5,7 @@
       github:
         untrusted-projects:
           - Juniper/zuul-jobs:
-              shadow: Juniper/contrail-project-config
+              shadow: alexey-mr/contrail-project-config
           - Juniper/contrail-publisher
           - Juniper/zuul:
               exclude:  ['pipeline', 'job', 'semaphore', 'project', 'secret', 'project-template', 'nodeset']
@@ -13,11 +13,11 @@
           - tungsten-infra/containerregistry
       gerrit:
         config-projects:
-          - Juniper/contrail-project-config
+          - alexey-mr/contrail-project-config
         untrusted-projects:
           - Juniper/contrail
-          - Juniper/contrail-zuul-jobs:
-              shadow: Juniper/contrail-project-config
+          - alexey-mr/contrail-zuul-jobs:
+              shadow: alexey-mr/contrail-project-config
           - Juniper/contrail-analytics
           - Juniper/contrail-ansible
           - Juniper/contrail-ansible-deployer

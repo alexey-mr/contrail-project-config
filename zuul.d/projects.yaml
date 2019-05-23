@@ -331,7 +331,7 @@
       - noops
 
 - project:
-    name: Juniper/contrail-project-config
+    name: alexey-mr/contrail-project-config
     templates:
       - noops
     check:

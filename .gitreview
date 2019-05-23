@@ -12,5 +12,5 @@
 [gerrit]
 host=review.opencontrail.org
 port=29418
-project=Juniper/contrail-project-config.git
+project=alexey-mr/contrail-project-config.git
 defaultbranch=master
