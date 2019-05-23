@@ -491,7 +491,7 @@
       - noops
 
 - project:
-    name: Juniper/contrail-dev-env
+    name: progmaticlab/contrail-dev-env
 
 - project:
     name: Juniper/contrail-vro-plugin

@@ -29,7 +29,7 @@
           - Juniper/contrail-container-builder
           - Juniper/contrail-controller
           - Juniper/contrail-deployers-containers
-          - Juniper/contrail-dev-env
+          - progmaticlab/contrail-dev-env
           - Juniper/contrail-docker
           - Juniper/contrail-docs
           - Juniper/contrail-dpdk
