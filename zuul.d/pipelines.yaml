@@ -16,3 +16,21 @@
             - ^master$
           comment: (?i)recheck(( (?:bug|lp)[\s#:]*(\d+))|( zuulv3)|( no bug))?(\s+clean)?\s*$
 
+- pipeline:
+    name: gate
+    description: |
+      Changes that have been approved by core developers are enqueued in order in this pipeline,
+      and if they pass CI tests, will be merged.
+    success-message: Build succeeded (gate pipeline).
+    failure-message: Build failed (gate pipeline).
+    manager: dependent
+    precedence: high
+    require:
+      opencontrail_gerrit:
+        open: True
+        current-patchset: True
+        approval:
+          - Verified: [1, 2, -2]
+            username: ^zuul$
+          - Approved: 1
+          - Code-Review: 2
