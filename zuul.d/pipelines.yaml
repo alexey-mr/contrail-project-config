@@ -34,3 +34,9 @@
             username: ^zuul$
           - Approved: 1
           - Code-Review: 2
+    trigger:
+      opencontrail_gerrit:
+        - event: comment-added
+          branch:
+            - ^master$
+          comment: (?i)recheck +gate\s*$
