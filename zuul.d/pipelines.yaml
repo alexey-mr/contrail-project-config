@@ -69,12 +69,6 @@
           comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*check experimental-sanity\s*$
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/.*$
-            - ^contrail_dpdk_.*$
-            - ^release-.*-contrail$
     start:
       opencontrail_gerrit: {}
     success:
@@ -88,10 +82,7 @@
     manager: independent
     post-review: true
     trigger:
-      gerrit:
+      opencontrail_gerrit:
         - event: ref-updated
           ref:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
