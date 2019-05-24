@@ -53,6 +53,26 @@
     failure:
       opencontrail_gerrit: {}
 
+- pipeline:
+    name: experimental
+    description: On-demand pipeline for testing jobs.
+    manager: independent
+    success-message: Build succeeded (experimental pipeline).
+    failure-message: Build failed (experimental pipeline).
+    precedence: high
+    trigger:
+      gerrit:
+        - event: comment-added
+          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*check experimental\s*$
+          branch:
+            - ^master$
+    start:
+      gerrit: {}
+    success:
+      gerrit: {}
+    failure:
+      gerrit: {}
+
 
 - pipeline:
     name: experimental-sanity
