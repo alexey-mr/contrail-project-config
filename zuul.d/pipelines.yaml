@@ -15,6 +15,12 @@
           branch:
             - ^master$
           comment: (?i)recheck(( (?:bug|lp)[\s#:]*(\d+))|( zuulv3)|( no bug))?(\s+clean)?\s*$
+    start:
+      opencontrail_gerrit: {}
+    success:
+      opencontrail_gerrit: {}
+    failure:
+      opencontrail_gerrit: {}
 
 - pipeline:
     name: gate
@@ -40,3 +46,52 @@
           branch:
             - ^master$
           comment: (?i)recheck +gate\s*$
+    start:
+      opencontrail_gerrit: {}
+    success:
+      opencontrail_gerrit: {}
+    failure:
+      opencontrail_gerrit: {}
+
+
+- pipeline:
+    name: experimental-sanity
+    description: |
+      On-demand pipeline for running sanity jobs from available, latest
+      docker images.
+    manager: independent
+    success-message: Build succeeded (experimental-sanity pipeline).
+    failure-message: Build failed (experimental-sanity pipeline).
+    precedence: normal
+    trigger:
+      opencontrail_gerrit:
+        - event: comment-added
+          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*check experimental-sanity\s*$
+          branch:
+            - ^master$
+            - ^R5.0$
+            - ^R5.1$
+            - ^R6.0-WIP$
+            - ^contrail/.*$
+            - ^contrail_dpdk_.*$
+            - ^release-.*-contrail$
+    start:
+      opencontrail_gerrit: {}
+    success:
+      opencontrail_gerrit: {}
+    failure:
+      opencontrail_gerrit: {}
+
+- pipeline:
+    name: post-merge
+    description: This pipeline runs jobs after every code merge
+    manager: independent
+    post-review: true
+    trigger:
+      gerrit:
+        - event: ref-updated
+          ref:
+            - ^master$
+            - ^R5.0$
+            - ^R5.1$
+            - ^R6.0-WIP$
