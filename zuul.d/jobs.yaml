@@ -34,7 +34,7 @@
       - playbooks/base/post-logs.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: progmaticlab/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
     timeout: 3600
     secrets:
       - site_logs
@@ -50,7 +50,7 @@
       - playbooks/base/post-logs.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: progmaticlab/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
     timeout: 3600
     secrets:
       - site_logs
@@ -64,7 +64,7 @@
     pre-run: playbooks/contrail/src-pre.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: progmaticlab/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
 
 - job:
     name: contrail-vnc-build-base
@@ -105,19 +105,21 @@
     secrets:
       - build_cache_db
 
-#- job:
-#    name: contrail-vnc-publish-containers-nightly
-#    parent: contrail-src-base
-#    description: |
-#      A job for publishing Docker containers to DockerHub.
-#    required-projects:
-#      - Juniper/contrail-publisher
-#      - tungsten-infra/containerregistry
-#    run: playbooks/docker/publish-nightly.yaml
-#    nodeset: worker-centos-7
-#    secrets:
-#      - docker_registry
-#      - dockerhub
+- job:
+    name: tf-publish-containers-nightly
+    parent: contrail-vnc-build-base
+    description: |
+      A job for publishing Docker containers to DockerHub.
+    run: playbooks/docker/publish-nightly.yaml
+    nodeset: worker-centos-7
+
+- job:
+    name: tf-publish-containers-stable-nightly
+    parent: contrail-vnc-build-base
+    description: |
+      A job for publishing Docker containers to DockerHub as stable.
+    run: playbooks/docker/publish-nightly-stable.yaml
+    nodeset: worker-centos-7
 
 # Transition to contrail-base when all jobs are ported
 - job:
@@ -132,7 +134,7 @@
     post-run: playbooks/contrail-base2/post.yaml
     roles:
       - zuul: Juniper/zuul-jobs
-      - zuul: progmaticlab/contrail-zuul-jobs
+      - zuul: alexey-mr/contrail-zuul-jobs
     timeout: 3600
 
 - job:
@@ -141,7 +143,7 @@
       This job is posting infra-doc html.
     parent: build-infra-doc
     required-projects:
-      - progmaticlab/contrail-zuul-jobs
+      - alexey-mr/contrail-zuul-jobs
       - Juniper/contrail-infra-doc
     post-run: playbooks/publish-infra-doc/post.yaml
     nodeset: worker-centos-7
@@ -154,6 +156,6 @@
     description: |
       Publish build rpms to Nexus repository.
     required-projects:
-      - progmaticlab/contrail-zuul-jobs
+      - alexey-mr/contrail-zuul-jobs
     post-run: playbooks/publish-third-party-packages/post.yaml
     nodeset: worker-centos-7

@@ -8,47 +8,10 @@
     manager: independent
     trigger:
       gerrit:
-        - event: patchset-created
-          branch:
-            - ^master$
-            - ^R6.0-WIP$
-            - ^R5.0$
-            - ^R5.1$
-            - ^contrail/ocata$
-            - ^contrail/queens$
-            - ^contrail/rocky$
-            - ^contrail_dpdk_17_02$
-            - ^contrail_dpdk_17_11$
-            - ^contrail_dpdk_17_11_3$
-            - ^contrail_dpdk_18_05_1$
-            - ^release-3.7-contrail$
-            - ^release-3.9-contrail$
-            - ^release-3.11-contrail$
-            - ^stable/queens$
-            - ^stable/ocata$
-            - ^stable/newton$
-            - ^production$
         - event: comment-added
           branch:
             - ^master$
-            - ^R6.0-WIP$
-            - ^R5.0$
-            - ^R5.1$
-            - ^contrail/ocata$
-            - ^contrail/queens$
-            - ^contrail/rocky$
-            - ^contrail_dpdk_17_02$
-            - ^contrail_dpdk_17_11$
-            - ^contrail_dpdk_17_11_3$
-            - ^contrail_dpdk_18_05_1$
-            - ^release-3.7-contrail$
-            - ^release-3.9-contrail$
-            - ^release-3.11-contrail$
-            - ^stable/queens$
-            - ^stable/ocata$
-            - ^stable/newton$
-            - ^production$
-          comment: (?i)recheck(( (?:bug|lp)[\s#:]*(\d+))|( zuulv3)|( no bug))?(\s+clean)?\s*$
+          comment: (?i)check tf-periodic-nightly\s*$
 
     start:
       gerrit:
@@ -61,7 +24,7 @@
         VerifiedTF: -1
 
     footer-message: |
-      Job live status page: http://38.108.68.180:8080/
+      TF Nightly Job live status page: http://38.108.68.117:8080/
 
 - pipeline:
     name: gate
@@ -86,66 +49,15 @@
         - event: comment-added
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/ocata$
-            - ^contrail/queens$
-            - ^contrail/rocky$
-            - ^contrail_dpdk_17_02$
-            - ^contrail_dpdk_17_11$
-            - ^contrail_dpdk_17_11_3$
-            - ^contrail_dpdk_18_05_1$
-            - ^release-3.7-contrail$
-            - ^release-3.9-contrail$
-            - ^release-3.11-contrail$
-            - ^stable/queens$
-            - ^stable/ocata$
-            - ^stable/newton$
-            - ^production$
-          comment: (?i)recheck +gate\s*$
+          comment: (?i)gate tf-periodic-nightly\s*$
         - event: comment-added
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/ocata$
-            - ^contrail/queens$
-            - ^contrail/rocky$
-            - ^contrail_dpdk_17_02$
-            - ^contrail_dpdk_17_11$
-            - ^contrail_dpdk_17_11_3$
-            - ^contrail_dpdk_18_05_1$
-            - ^release-3.7-contrail$
-            - ^release-3.9-contrail$
-            - ^release-3.11-contrail$
-            - ^stable/queens$
-            - ^stable/ocata$
-            - ^stable/newton$
-            - ^production$
           approval:
             - Approved: 1
         - event: comment-added
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/ocata$
-            - ^contrail/queens$
-            - ^contrail/rocky$
-            - ^contrail_dpdk_17_02$
-            - ^contrail_dpdk_17_11$
-            - ^contrail_dpdk_17_11_3$
-            - ^contrail_dpdk_18_05_1$
-            - ^release-3.7-contrail$
-            - ^release-3.9-contrail$
-            - ^release-3.11-contrail$
-            - ^stable/queens$
-            - ^stable/ocata$
-            - ^stable/newton$
-            - ^production$
           approval:
             - VerifiedTF: 1
           username:
@@ -154,23 +66,6 @@
         - event: comment-added
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/ocata$
-            - ^contrail/queens$
-            - ^contrail/rocky$
-            - ^contrail_dpdk_17_02$
-            - ^contrail_dpdk_17_11$
-            - ^contrail_dpdk_17_11_3$
-            - ^contrail_dpdk_18_05_1$
-            - ^release-3.7-contrail$
-            - ^release-3.9-contrail$
-            - ^release-3.11-contrail$
-            - ^stable/queens$
-            - ^stable/ocata$
-            - ^stable/newton$
-            - ^production$
           approval:
             - Code-Review: 2
     start:
@@ -184,37 +79,66 @@
       gerrit:
         VerifiedTF: -2
     footer-message: |
-      Job live status page: http://38.108.68.180:8080/
+      TF Nightly Job live status page: http://38.108.68.117:8080/
     window-floor: 20
     window-increase-factor: 2
 
-#- pipeline:
-#    name: periodic-nightly
-#    description: Periodic pipeline for building OpenContrail every 12h.
-#    manager: independent
-#    precedence: high
-#    post-review: true
-#    trigger:
-#      timer:
-#        - time: "0 7,19 * * *"
-#    start:
-#      stats:
-#      smtp:
-#        to: cf-test@juniper.net, ci-admin@opencontrail.org, dl-contrail-sw@juniper.net
-#        subject: "[periodic-nightly] Starting jobs - {change.branch}"
-#    success:
-#      stats:
-#      smtp:
-#        to: cf-test@juniper.net, ci-admin@opencontrail.org, dl-contrail-sw@juniper.net
-#        subject: "[periodic-nightly] SUCCESS - {change.branch}"
-#    failure:
-#      stats:
-#      smtp:
-#        to: cf-test@juniper.net, ci-admin@opencontrail.org, dl-contrail-sw@juniper.net
-#        subject: "[periodic-nightly] FAILURE - {change.branch}"
-#    footer-message: |
-#
-#      Dockerhub: https://hub.docker.com/u/opencontrailnightly/
+- pipeline:
+    name: periodic-nightly
+    description: Periodic pipeline for building Tungsten Fabric containers every 24 at midnight.
+    manager: independent
+    precedence: high
+    post-review: true
+    trigger:
+      timer:
+        - time: "0 0 * * *"
+      gerrit:
+        - event: comment-added
+          branch:
+            - ^master$
+          comment: (?i)periodic-nightly tf-periodic-nightly\s*$
+    start:
+      # smtp:
+      #   from: zuul@tungstenfabric.com
+      #   to: amorlang@progmaticlab.com
+      #   subject: '[periodic-nightly] Starting jobs - {change}'
+      gerrit: {}
+    success:
+      gerrit: {}
+      # smtp:
+      #   from: zuul@tungstenfabric.com
+      #   to: amorlang@progmaticlab.com
+      #   subject: '[periodic-nightly] SUCCESS - {change}'
+    failure:
+      gerrit: {}
+      # smtp:
+      #   from: zuul@tungstenfabric.com
+      #   to: amorlang@progmaticlab.com
+      #   subject: '[periodic-nightly] FAILURE - {change}'
+    footer-message: |
+      TF Nightly Job live status page: http://38.108.68.117:8080/
+
+# start:
+#   stats:
+#   smtp:
+#     to: amorlang@progmaticlab.com
+#     subject: "[periodic-nightly] Starting jobs - {change.branch}"
+
+# success:
+#   stats:
+#   smtp:
+#     to: amorlang@progmaticlab.com
+#     subject: "[periodic-nightly] SUCCESS - {change.branch}"
+
+# failure:
+#   stats:
+#   smtp:
+#     to: amorlang@progmaticlab.com
+#     subject: "[periodic-nightly] FAILURE - {change.branch}"
+
+# footer-message: |
+
+#   Dockerhub: https://hub.docker.com/u/tungstenfabric/
 
 - pipeline:
     name: experimental
@@ -226,15 +150,9 @@
     trigger:
       gerrit:
         - event: comment-added
-          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*check experimental\s*$
+          comment: (?i)experimental tf-periodic-nightly\s*$
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/.*$
-            - ^contrail_dpdk_.*$
-            - ^release-.*-contrail$
     start:
       gerrit: {}
     success:
@@ -254,15 +172,9 @@
     trigger:
       gerrit:
         - event: comment-added
-          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*check experimental-sanity\s*$
+          comment: (?i)experimental-sanity tf-periodic-nightly\s*$
           branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
-            - ^contrail/.*$
-            - ^contrail_dpdk_.*$
-            - ^release-.*-contrail$
     start:
       gerrit: {}
     success:
@@ -277,12 +189,17 @@
     post-review: true
     trigger:
       gerrit:
-        - event: ref-updated
-          ref:
+        - event: comment-added
+          comment: (?i)post-merge tf-periodic-nightly\s*$
+          branch:
             - ^master$
-            - ^R5.0$
-            - ^R5.1$
-            - ^R6.0-WIP$
+
+
+#      gerrit:
+#        - event: ref-updated
+#          ref:
+#            - ^master$
+
 #    start:
 #      stats:
 #    success:

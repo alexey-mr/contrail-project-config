@@ -10,10 +10,15 @@
     var: packaging
 
 - name: Generate the build number
+  debugger: always
+  ignore_errors: true
   build_number:
     zuul_buildset_id: "{{ zuul.buildset }}"
     version: "{{ packaging.version.public }}"
     build_cache_db_connection_info: "{{ build_cache_db }}"
+
+- set_fact:
+    build_number: "{{ build_number | default('latest') }}"
 
 - name: Print the packaging variables
   debug:
